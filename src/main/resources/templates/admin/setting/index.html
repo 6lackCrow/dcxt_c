@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <link rel="stylesheet" th:href="@{../../bootstrap/css/bootstrap-theme.min.css}"/>
+    <link rel="stylesheet" th:href="@{../../bootstrap/css/bootstrap.min.css}"/>
+    <script type="text/javascript" th:src="@{../../jQuery/jquery-3.4.1.min.js}"></script>
+    <script type="text/javascript" th:src="@{../../bootstrap/js/bootstrap.min.js}"></script>
+    <style type="text/css">
+        .main-title{
+            color: #5a6268;
+        }
+        li{
+            list-style: none;
+            margin-bottom: 15px;
+        }
+        .panel{
+            border: none;
+            -webkit-box-shadow: none;
+        }
+    </style>
+</head>
+<body>
+<div class="main-index">
+    <div class="main-title"><h2>设置</h2></div>
+    <div class="panel panel-default">
+        <form method="post" action="/admin/setting/updatasetting">
+            <div class="form-group form-inline ">
+                <ul class="list-group">
+                    <li><b>微信接口</b></li>
+                    <li>
+                        <label>AppID</label>
+                        <input type="text" maxlength="200" style="width:265px;" class="form-control" name="appid" th:value="${appid}" required />
+                    </li>
+                    <li>
+                        <label>AppSecret</label>
+                        <input type="password" maxlength="200" style="width:265px;" class="form-control" name="appsecret" th:value="${appsecret}" required />
+                    </li>
+                    <li><b>促销</b></li>
+                    <li class="form-inline">
+                        满 <input type="text" maxlength="4" style="width:60px;" class="form-control" name="promotion_k" th:value="${promotion.getK()}" required />
+                        减 <input type="text" maxlength="4" style="width:60px;" class="form-control" name="promotion_v" th:value="${promotion.getV()}" required />
+                    </li>
+                    <li><b>轮播图</b></li>
+                    <li th:each="img_swiper:${img_swipers}">
+                        <input type="text" style="width:380px;" class="form-control" th:name="${'img_swiper'+img_swiper.getNum()}" th:value="${img_swiper.getImg_swiper()}" />
+                        <img th:src="${img_swiper.getImg_swiper()}" style="width:200px;border:1px solid #ccc;margin:5px 0">
+                    </li>
+                    <li><b>广告图</b></li>
+                    <li>
+                        <input type="text" style="width:380px;" class="form-control" name="img_ad" th:value="${img_ad}" />
+                        <img th:src="${img_ad}" style="width:200px;border:1px solid #ccc;margin:5px 0">
+                    </li>
+                    <li><b>分类图</b></li>
+                    <li th:each="img_category:${img_categories}">
+                        <input type="text" style="width:380px;" class="form-control" th:name="${'img_category'+img_category.getNum()}" th:value="${img_category.getImg_category()}" />
+                        <img th:src="${img_category.getImg_category()}" style="width:200px;border:1px solid #ccc;margin:5px 0">
+                    </li>
+                    <li><input type="submit" class="btn btn-primary" value="保存设置" /></li>
+                </ul>
+            </div>
+        </form>
+    </div>
+</div>
+
+</body>
+</html>

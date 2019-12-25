@@ -1,0 +1,45 @@
+
+.login {background:#eee}
+.login > .container{background:#fff;margin: 0 auto;margin-top: 50px;padding:40px 40px 10px 40px;border-radius:22px;}
+.login h1{margin:0 0 20px 0;font-size:24px;text-align:center;}
+.login > .container{max-width:500px;}
+.login input[type=submit]{width:100%;}
+
+.install {background:#eee}
+.install > .container{background:#fff;margin: 0 auto;margin-top: 50px;padding:40px 20px 10px 40px;border-radius:22px}
+.install h1{margin:0 0 20px 0;font-size:24px;text-align:center;}
+.install ul{list-style:none;padding-left:0}
+.install .form-group{margin:0 auto}
+.install .form-group li {margin: 12px 0px;}
+.install .form-group label{margin-left:10px;font-weight:normal;}
+.install .required {color: red;font-size: 16px;margin-left: 2px;}
+
+.main-nav{margin-bottom:0}
+.main-nav .nav > li i{margin-right:5px;}
+.main-nav > .navbar-right{margin-right:15px;line-height:30px;}
+.main-nav > .navbar-right > li {display:inline-block;}
+.main-nav > .main-sidebar{padding-left:0;padding-right:0}
+.main-nav > .main-sidebar li:not(:last-child){border-bottom:1px solid #e7e7e7}
+.main-nav > .main-sidebar li > a.active{background:#eee}
+
+.main-content > div{margin:10px 10px 30px;}
+.main-content ul.form-inline{list-style: none; padding:0}
+.main-content ul.form-inline > li{margin:12px 0;}
+
+.main-title{margin:10px 0 0;padding:10px 0}
+.main-title > h2{font-size:16px;font-weight:bold;color:#666;margin:0}
+.main-form > ul{list-style:none;padding-left:0}
+.main-form > ul > li {margin: 12px 0px;}
+.main-form > ul > li > label{font-weight:normal}
+
+.main-section{margin-top:10px;}
+.main-section:after {content:"";display:block;clear: both;}
+
+@media (min-width: 768px){
+    .main-nav > .main-sidebar{position: fixed; width: 170px; top:51px;bottom:0;border-right-width:1px;border-right-style:solid;overflow-y:auto!important}
+    .main-nav > .main-sidebar > .nav{margin-top:20px;}
+    .main-nav > .main-sidebar > .nav > li{border-bottom:0}
+    .main-content{position:fixed;left:170px;right:0;top:51px;bottom:0;overflow:auto}
+    .main-content > div{margin:10px 30px 30px;}
+    .main-nav > .main-sidebar li > a.active{border-top: 1px solid #e7e7e7;border-bottom: 1px solid #e7e7e7;padding-top:9px;padding-bottom:9px;}
+}

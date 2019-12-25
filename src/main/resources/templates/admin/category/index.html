@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <link rel="stylesheet" th:href="@{../../bootstrap/css/bootstrap-theme.min.css}"/>
+    <link rel="stylesheet" th:href="@{../../bootstrap/css/bootstrap.min.css}"/>
+    <script type="text/javascript" th:src="@{../../jQuery/jquery-3.4.1.min.js}"></script>
+    <script type="text/javascript" th:src="@{../../bootstrap/js/bootstrap.min.js}"></script>
+    <style type="text/css">
+        .main-title{
+            color: #5a6268;
+        }
+        li{
+            list-style: none;
+            margin-bottom: 15px;
+        }
+        .panel{
+            border: none;
+            -webkit-box-shadow: none;
+        }
+        .main-section{
+            margin-top: 15px;
+        }
+        .col-md-offset-0{
+            margin-left: -15px;
+        }
+        .none{
+            display: none;
+        }
+        #mybtn1{
+            margin-top: 5px;
+        }
+        #mybtn2{
+            margin-top: 5px;
+        }
+        .main-category{
+            display: flex;
+            flex-direction: column;
+        }
+
+    </style>
+</head>
+<body>
+<div class="main-category">
+    <div class="main-title">
+        <h2>分类管理</h2>
+        <h4 class="text-danger">tips:删除分类时会将该分类下的所有商品一起删除</h4>
+    </div>
+
+    <div class="main-section">
+        <form method="post" action="/admin/category/addcategory">
+            <ul class="form-group form-inline col-md-3 col-md-offset-0">
+                <li>
+                    <input type="text" class="form-control" maxlength="5" style="width:50px;" name="sort">
+                    <label>序号</label>
+                </li>
+                <li>
+                    <input type="text" class="form-control" name="name" required>
+                    <label>名称</label>
+                </li>
+                <li>
+                    <input type="hidden" name="action" value="add">
+                    <input type="submit" value="添加新分类" class="btn btn-primary">
+                </li>
+            </ul>
+        </form>
+    </div>
+
+    <div class="panel panel-default">
+
+            <table class="table table-striped table-bordered table-hover" style="max-width:600px;">
+                <thead>
+                <tr>
+                    <th width="55">序号</th>
+                    <th>名称</th>
+                    <th width="100">操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="category:${categories}">
+                    <td>
+                        <form method="post" action="/admin/category/updatesort">
+                            <input type="text" class="form-control" maxlength="5" name="sort" th:value="${category.getSort()}" style="height:25px;font-size:12px;padding:0 5px;">
+                            <input class="none" name="id" th:value="${category.getId()}" />
+                            <input id="mybtn1" type="submit" value="修改" class="btn btn-primary">
+                        </form>
+                    </td>
+                    <td>
+                        <form method="post" action="/admin/category/updatecategoryname">
+                            <input type="text" class="form-control" maxlength="5" name="category_name" th:value="${category.getName()}" style="height:25px;font-size:12px;padding:0 5px;">
+                            <input class="none" name="id" th:value="${category.getId()}" />
+                            <input id="mybtn2" type="submit" value="修改" class="btn btn-primary">
+                        </form>
+                    </td>
+                    <td>
+                        <a th:href="@{'/admin/category/deletecategory?id='+${category.getId()}}" class="js-del" data-id="{$v.id}" style="color:#C13932">删除</a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+
+
+    </div>
+</div>
+</body>
+</html>

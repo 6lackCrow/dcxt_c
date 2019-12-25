@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>editfood</title>
+    <link rel="stylesheet" th:href="@{../../bootstrap/css/bootstrap-theme.min.css}"/>
+    <link rel="stylesheet" th:href="@{../../bootstrap/css/bootstrap.min.css}"/>
+    <link rel="stylesheet" th:href="@{../../css/css-main.css}"/>
+    <script type="text/javascript" th:src="@{../../jQuery/jquery-3.4.1.min.js}"></script>
+    <script type="text/javascript" th:src="@{../../bootstrap/js/bootstrap.min.js}"></script>
+    <script type="text/javascript" th:src="@{../../js/common.js}"></script>
+    <style type="text/css">
+        .main-title{
+            color: #5a6268;
+        }
+        .panel{
+            border: none;
+            -webkit-box-shadow: none;
+        }
+        li{
+            list-style: none;
+            margin-bottom: 15px;
+        }
+    </style>
+</head>
+<body>
+<div class="main-food">
+    <div class="main-title">
+        <h2>编辑商品</h2>
+    </div>
+    <form enctype="multipart/form-data" method="post" id="edit_form" action="">
+        <div class="panel panel-default">
+            <ul>
+                <li>
+                    <label>分类</label>
+                    <select id="btn_category" style="width:120px;" class="form-control" name="category_id">
+                        <option th:each="category:${categories}" th:text="${category.getName()}" th:value="${category.getId()}"></option>
+                    </select>
+                </li>
+                <li>
+                    <label>商品名称</label>
+                    <input type="text" maxlength="200" style="width:265px;" class="form-control" name="name" th:value="${food.getName()}" required />
+                </li>
+                <li>
+                    <label>商品价格</label>
+                    <input type="text" maxlength="200" style="width:100px;" class="form-control" name="price" th:value="${food.getPrice()}" required />
+                </li>
+                <li id="test">
+                    <label>商品图片</label>
+                    <div class="upload-pic">
+                        <img class="img" th:src="${food.getImage_url()}" width="100" height="100">
+                        <input class="a" type="file" name="file" accept="image/*" required>
+                        <script>
+                            $('.a').change(function(e) {
+                                var _URL = window.URL || window.webkitURL;
+                                var file, img;
+                                if ((file = this.files[0])) {
+                                    img = new Image();
+                                    img.onload = function() {
+                                        $('.img').attr('src', this.src);
+                                        console.log(this.width)
+                                    };
+                                    img.src = _URL.createObjectURL(file);
+                                }
+                            })
+                        </script>
+                    </div>
+                </li>
+                <li>
+                    <div class="checkbox">
+                        <input type="checkbox" value="1" name="status" id="status" onclick="javascript:document.getElementById('hid').value=this.checked;">是否上架
+                        <input type="hidden" id="hid" name="status" value="0">
+                    </div>
+                </li>
+                <li>
+                    <input type="submit" class="btn btn-primary" value="保存商品"/>
+                </li>
+            </ul>
+        </div>
+    </form>
+
+</div>
+</body>
+</html>

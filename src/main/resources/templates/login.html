@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>管理员登录</title>
+    <link th:href="@{../../css/bootstrap.min.css}" rel="stylesheet">
+    <link th:href="@{../../css/signin.css}" rel="stylesheet">
+    <script th:src="@{../../jQuery/jquery-3.4.1.min.js}"></script>
+    <script th:src="@{../../js/bootstrap.min.js}"></script>
+</head>
+<body class="text-center">
+
+<form class="form-signin"  method="post" action="/admin/login">
+
+    <!-- 取值替换原来默认的值-->
+
+<!--    <img class="mb-4"  src="assets/img/bootstrap-solid.svg" alt="" width="72" height="72">-->
+
+    <h1 class="h3 mb-3 font-weight-normal">点餐系统后台登录</h1>
+
+    <span class="alert-danger" th:text="${msg}"></span>
+    <label class="sr-only" >Username</label>
+    <br>
+    <input type="text" name="username" class="form-control" placeholder="用户名"
+
+           required="" autofocus="">
+
+    <label class="sr-only" >Password</label>
+    <br>
+    <input type="password" name="password" class="form-control" placeholder="密码"
+
+           required="">
+
+
+    <button class="btn btn-lg btn-primary btn-block" type="submit" >登录</button>
+
+</form>
+
+</body>
+</html>

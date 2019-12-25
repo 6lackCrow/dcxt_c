@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>初始化</title>
+    <link th:href="@{../../css/bootstrap.min.css}" rel="stylesheet">
+    <link th:href="@{../../font-awesome/css/font-awesome.min.css}">
+    <link th:href="@{../../static/css/css-main.css}" rel=stylesheet>
+    <script th:src="@{../../jQuery/jquery-3.4.1.min.js}"></script>
+    <script th:src="@{../../js/bootstrap.min.js}"></script>
+    <script th:src="@{../../js/common.js}"></script>
+    <style>
+        .container{
+            text-align: center;
+            float: none;
+        }
+        .col-md-3{
+            margin: 0 auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>点餐系统后台初始化</h1>
+        <form method="post" action="/admin/setadmin">
+            <div class="form-group form-inline col-md-3 col-md-offset-5">
+                <ul class="list-group">
+                    <li class="list-group-item"><b>管理员配置</b></li>
+                    <li class="list-group-item">
+                        <input type="text" maxlength="32" style="width:232px;" class="form-control" name="admin_username" value="admin" required />
+                        <label>管理员用户名</label>
+                    </li>
+                    <li class="list-group-item">
+                        <input type="text" maxlength="200" style="width:232px;" class="form-control" name="admin_pwd1" value="123456" id="pwd1" />
+                        <label class="control-label">管理员密码</label>
+                    </li>
+                    <li class="list-group-item">
+                        <input type="text" maxlength="200" style="width:232px;" class="form-control" name="admin_pwd2" value="123456" id="pwd2" />
+                        <label class="control-label">再次输入管理员密码</label>
+                    </li>
+                    <li class="list-group-item">
+                        <span class="alert-danger" th:text="${msg}"></span>
+                        <input type="submit" class="btn btn-primary" value="立即配置"/>
+                    </li>
+                </ul>
+            </div>
+        </form>
+    </div>
+</body>
+</html>
