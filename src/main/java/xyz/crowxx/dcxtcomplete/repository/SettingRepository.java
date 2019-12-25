@@ -10,7 +10,7 @@ import javax.transaction.Transactional;
 public interface SettingRepository extends JpaRepository<Setting,Long> {
     @Transactional
     @Modifying
-    @Query(value = "INSERT INTO setting (NAME,VALUE) VALUES ('appid',''),('appsecret',''),('img_ad','/static/uploads/default/image_ad.png'),('img_category','[\"\\/static\\/uploads\\/default\\/bottom_1.png\",\"\\/static\\/uploads\\/default\\/bottom_2.png\",\"\\/static\\/uploads\\/default\\/bottom_3.png\",\"\\/static\\/uploads\\/default\\/bottom_1.png\"]'),('img_swiper','[\"\\/static\\/uploads\\/default\\/banner_1.png\",\"\\/static\\/uploads\\/default\\/banner_2.png\",\"\\/static\\/uploads\\/default\\/banner_3.png\"]'),('promotion','[{\"k\":50,\"v\":10}]')",nativeQuery = true)
+    @Query(value = "INSERT INTO setting (NAME,VALUE) VALUES ('appid',''),('appsecret',''),('img_ad','/static/static/uploads/default/image_ad.png'),('img_category','[\"/static/static/uploads/default/bottom_1.png\",\"/static/static/uploads/default/bottom_2.png\",\"/static/static/uploads/default/bottom_3.png\",\"/static/static/uploads/default/bottom_1.png\"]'),('img_swiper','[\"/static/static/uploads/default/banner_1.png\",\"/static/static/uploads/default/banner_2.png\",\"/static/static/uploads/default/banner_3.png\"]'),('promotion','[{\"k\":50,\"v\":10}]')",nativeQuery = true)
     void setDefaultName();
 
     Setting findSettingByName(String name);

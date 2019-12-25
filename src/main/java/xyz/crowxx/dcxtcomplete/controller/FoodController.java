@@ -183,7 +183,7 @@ public class FoodController {
         for (Category category1 : categories) {
             categoryList.add(category1);
         }
-        String url = "/static/uploads/" + food.getImage_url();
+        String url = "/static/static/uploads/" + food.getImage_url();
         food.setImage_url(url);
         model.addAttribute("food",food);
         model.addAttribute("categories",categoryList);

@@ -23,6 +23,7 @@ public class InterceptorConfig implements WebMvcConfigurer {
                 "/font-awesome/**",
                 "/static/**",
                 "/api/**",
-                "/admin/food/**");
+                "/admin/food/**",
+                "/admin/setting/index");
     }
 }
