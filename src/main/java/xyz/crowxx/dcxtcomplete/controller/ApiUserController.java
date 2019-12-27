@@ -18,8 +18,8 @@ import xyz.crowxx.dcxtcomplete.util.HttpUtil;
 import javax.annotation.Resource;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.UUID;
 
 @RestController
 @RequestMapping("/api")
@@ -39,7 +39,7 @@ public class ApiUserController {
         return settingVO;
     }
     @GetMapping("/user/login")
-    public Object login(String js_code,HttpServletRequest request) throws IOException {
+    public Object login(String js_code, HttpServletResponse response) throws IOException {
         /*访问接口获取登录信息*/
         String appid = settingService.findAppID();
         String appsecret = settingService.findAppSecret();
@@ -55,14 +55,16 @@ public class ApiUserController {
         if (user==null){
             userService.createUser(userInfoVO.getOpenid());
         }
-        request.getSession().setAttribute("user",UUID.randomUUID().toString());
+
+        String token = userInfoVO.getOpenid();
+        System.out.println(token);
+        Cookie userCookie = new Cookie("JSESSIONID",token);
+        userCookie.setMaxAge(30*24*60*60);
+        response.addCookie(userCookie);
         SettingVO settingVO = new SettingVO();
         settingVO.setIsLogin(true);
         return settingVO;
     }
-
-
-
 }
 
 

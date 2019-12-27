@@ -7,6 +7,7 @@ import xyz.crowxx.dcxtcomplete.util.DateUtil;
 
 import javax.annotation.Resource;
 import java.math.BigDecimal;
+import java.util.List;
 
 @Service
 public class UserService {
@@ -23,5 +24,9 @@ public class UserService {
         user.setCreate_time(DateUtil.getDate());
         user.setPrice(new BigDecimal(0.00));
         return userRepository.save(user);
+    }
+
+    public List<User> findAll() {
+        return userRepository.findAll();
     }
 }

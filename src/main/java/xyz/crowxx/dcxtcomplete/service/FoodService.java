@@ -45,4 +45,12 @@ public class FoodService {
         appStorageService.deleteFileByFileName(imgPath);
         foodRepository.deleteById(id);
     }
+
+    public List<Food> findFoodsByCid(Long id) {
+        return foodRepository.findFoodsByCid(id);
+    }
+
+    public List<Food> findFoodsByCidAndStatus(Long cid, Integer status) {
+        return foodRepository.findFoodsByCidAndStatus(cid,status);
+    }
 }

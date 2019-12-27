@@ -20,4 +20,6 @@ public interface FoodRepository extends JpaRepository<Food,Long> {
     List<Food> findFoodByCondition(Long categoryid, String foodName);
     @Query(value = "select * from food where if(?1 !='',name like concat('%',?1,'%'),1=1) ",nativeQuery = true)
     List<Food> findFoodByFoodNameLike(String search);
+    @Query(value = "select * from food where category_id = ?1 and status = ?2",nativeQuery = true)
+    List<Food> findFoodsByCidAndStatus(Long id, Integer status);
 }
