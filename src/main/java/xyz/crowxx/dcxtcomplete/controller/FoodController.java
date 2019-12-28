@@ -85,78 +85,80 @@ public class FoodController {
 
     }
 
-    @GetMapping("/getfoodmanageindex")
-    public String getFoodManageIndex(Model model) {
-        List<Category> categories = categoryService.findAll();
-        Collections.sort(categories, new SortList<Category>("sort", true));
-        ;
-        List<Food> foods = foodService.findAll();
-        List<ShowFoodVO> foodVOS = new ArrayList<>();
-        for (Food food : foods) {
-            ShowFoodVO foodVO = new ShowFoodVO();
-            foodVO.setId(food.getId());
-            foodVO.setName(food.getName());
-            foodVO.setCreate_time(food.getCreate_time());
-            foodVO.setImgUrl(food.getImage_url());
-            String status = food.getStatus() == 0 ? "下架" : "上架";
-            foodVO.setStatus(status);
-            foodVO.setPrice(food.getPrice());
-            Optional<Category> category = categoryService.findCategoryById(food.getCategory_id());
-            foodVO.setCategory(category.get().getName());
-            foodVO.setCategory_id(food.getCategory_id());
-            foodVOS.add(foodVO);
-        }
-        Collections.sort(foodVOS, new SortList<ShowFoodVO>("category_id", true));
-        model.addAttribute("foods", foodVOS);
-        model.addAttribute("categories", categories);
-        return "admin/food_manage/index";
-    }
-
     @GetMapping("/findfoods")
-    public String findFoods(Model model, Long categoryid, String search) {
+    public String findFoods(Model model, Long categoryid, String search,int pageNow) {
+        System.out.println("cid:" + categoryid + " search:" +search + " pageNow:" + pageNow);
         List<Category> categories = categoryService.findAll();
         Collections.sort(categories, new SortList<Category>("sort", true));
-        ;
         List<ShowFoodVO> foodVOS = new ArrayList<>();
         if (categoryid == -1) {
             String foodName = search;
             List<Food> foods = foodService.findFoodByFoodNameLike(search);
-
-            for (Food food : foods) {
+            int pageSize = 10;
+            int lineCount = foods.size();
+            int pageCount = lineCount % pageSize ==0 ? lineCount/pageSize :  (lineCount/pageSize)+1;
+            int[] pageList = new int[pageCount];
+            for (int i = 0; i < pageCount; i++) {
+                pageList[i] = i+1;
+            }
+            List<Food> foodList = foodService.findFoodsByPageAndNameLike(foodName,pageSize*(pageNow-1),pageSize);
+            for (Food food : foodList) {
                 ShowFoodVO foodVO = new ShowFoodVO();
                 foodVO.setId(food.getId());
                 foodVO.setName(food.getName());
                 foodVO.setCreate_time(food.getCreate_time());
                 String status = food.getStatus() == 0 ? "下架" : "上架";
                 foodVO.setStatus(status);
+                foodVO.setImgUrl(food.getImage_url());
                 foodVO.setPrice(food.getPrice());
                 Optional<Category> category = categoryService.findCategoryById(food.getCategory_id());
                 foodVO.setCategory(category.get().getName());
                 foodVO.setCategory_id(food.getCategory_id());
                 foodVOS.add(foodVO);
             }
-            Collections.sort(foodVOS, new SortList<ShowFoodVO>("category_id", true));
+            model.addAttribute("foods", foodVOS);
+            model.addAttribute("categories", categories);
+            model.addAttribute("pageList",pageList);
+            model.addAttribute("pageNow",pageNow).addAttribute("pageBack",pageNow-1).addAttribute("pageNext",pageNow+1)
+                    .addAttribute("pageMax",pageCount).addAttribute("categoryid",categoryid).addAttribute("search",search);
         } else {
+            /*分页：pageSize：一页显示多少数据
+             * lineCount：一共有多少行数据
+             * pageCount：需要分多少页
+             * pageNow：用户当前访问第几页*/
             String foodName = search;
             List<Food> foods = foodService.findFoodByCondition(categoryid, foodName);
-            for (Food food : foods) {
+            int pageSize = 10;
+            int lineCount = foods.size();
+            int pageCount = lineCount % pageSize ==0 ? lineCount/pageSize :  (lineCount/pageSize)+1;
+            int[] pageList = new int[pageCount];
+            for (int i = 0; i < pageCount; i++) {
+                pageList[i] = i+1;
+            }
+            List<Food> foodList = foodService.findFoodsByPageAndCondition(categoryid,foodName,pageSize*(pageNow-1),pageSize);
+            for (Food food : foodList) {
                 ShowFoodVO foodVO = new ShowFoodVO();
                 foodVO.setId(food.getId());
                 foodVO.setName(food.getName());
                 foodVO.setCreate_time(food.getCreate_time());
                 String status = food.getStatus() == 0 ? "下架" : "上架";
                 foodVO.setStatus(status);
+                foodVO.setImgUrl(food.getImage_url());
                 foodVO.setPrice(food.getPrice());
                 Optional<Category> category = categoryService.findCategoryById(food.getCategory_id());
                 foodVO.setCategory(category.get().getName());
                 foodVO.setCategory_id(food.getCategory_id());
                 foodVOS.add(foodVO);
             }
-            Collections.sort(foodVOS, new SortList<ShowFoodVO>("category_id", true));
+            model.addAttribute("foods", foodVOS);
+            model.addAttribute("categories", categories);
+            model.addAttribute("pageList",pageList);
+            model.addAttribute("pageNow",pageNow).addAttribute("pageBack",pageNow-1).addAttribute("pageNext",pageNow+1)
+                    .addAttribute("pageMax",pageCount).addAttribute("categoryid",categoryid).addAttribute("search",search);
         }
-        model.addAttribute("foods", foodVOS);
-        model.addAttribute("categories", categories);
-        return "admin/food_manage/index";
+
+
+        return "admin/food_manage/find_foods_index";
     }
 
     @GetMapping("/deletefood")

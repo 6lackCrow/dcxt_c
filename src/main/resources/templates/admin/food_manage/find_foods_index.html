@@ -25,6 +25,12 @@
             display: flex;
             flex-direction: row;
         }
+        .disabled{
+            pointer-events:none;
+        }
+        #none{
+            display: none;
+        }
     </style>
 </head>
 <body>
@@ -37,11 +43,12 @@
         <div class="main-section">
             <div class="form-inline">
                 <form action="/admin/food/findfoods" style="width:800px;margin:0 10px;">
-                <select id="btn_category" style="width:120px;" class="form-control" name="categoryid">
-                    <option value="-1">所有分类</option>
-                    <option th:each="category:${categories}" th:value="${category.getId()}" th:text="${category.getName()}"></option>
-                </select>
+                    <select id="btn_category" style="width:120px;" class="form-control" name="categoryid">
+                        <option value="-1">所有分类</option>
+                        <option th:each="category:${categories}" th:value="${category.getId()}" th:text="${category.getName()}"></option>
+                    </select>
                     <input type="text" class="form-control" name="search" value="" placeholder="输入商品名">
+                    <input type="text" name="pageNow" value="1" id="none">
                     <input type="submit" class="btn btn-primary" value="搜索">
                 </form>
             </div>
@@ -73,10 +80,26 @@
             </table>
         </div>
     </div>
-    </div>
-
-
-    </form>
+</div>
+</form>
+<div class="main-section">
+    <ul class="pagination">
+<!--        Long categoryid, String search-->
+        <li id="back"><a th:href="@{'/admin/food/findfoods?search='+${search}+'&categoryid='+${categoryid}+'&pageNow=' + ${pageBack}}">«</a></li>
+        <li th:each="page:${pageList}" th:id="${page}"><a th:href="@{'/admin/food/findfoods?search='+${search}+'&categoryid='+${categoryid}+'&pageNow=' + ${page}}" th:text="${page}"></a></li>
+        <li id="next" ><a th:href="@{'/admin/food/findfoods?search='+${search}+'&categoryid='+${categoryid}+'&pageNow=' + ${pageNext}}">»</a></li>
+    </ul>
+    <script th:inline="javascript">
+        var idNow = [[${pageNow}]];
+        var idmax = [[${pageMax}]]
+        if (idNow==1){
+            $("#back").addClass("disabled");
+        }
+        if (idmax == idNow){
+            $("#next").addClass("disabled");
+        }
+        $("#"+idNow).addClass("active")
+    </script>
 </div>
 </body>
 </html>

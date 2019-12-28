@@ -53,4 +53,20 @@ public class FoodService {
     public List<Food> findFoodsByCidAndStatus(Long cid, Integer status) {
         return foodRepository.findFoodsByCidAndStatus(cid,status);
     }
+
+    public int getLineCount() {
+        return foodRepository.getLineCount();
+    }
+
+    public List<Food> findFoodsByPage(int pageNow, int pageSize) {
+        return foodRepository.findFoodsByPage(pageNow,pageSize);
+    }
+
+    public List<Food> findFoodsByPageAndCondition(Long categoryid, String foodName, int pageNow, int pageSize) {
+        return foodRepository.findFoodsByPageAndCondition(categoryid,foodName,pageNow,pageSize);
+    }
+
+    public List<Food> findFoodsByPageAndNameLike(String foodName, int pageNow, int pageSize) {
+        return foodRepository.findFoodsByPageAndNameLike(foodName,pageNow,pageSize);
+    }
 }
