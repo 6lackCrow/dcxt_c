@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import xyz.crowxx.dcxtcomplete.VO.FoodListVo;
+import xyz.crowxx.dcxtcomplete.VO.FoodVO;
 import xyz.crowxx.dcxtcomplete.VO.PromotionVO;
 import xyz.crowxx.dcxtcomplete.model.Category;
 import xyz.crowxx.dcxtcomplete.model.Food;
@@ -65,17 +66,31 @@ public class ApiFoodController {
             FoodListVo foodListVo = new FoodListVo();
             List<Food> foods = foodService.findFoodsByCidAndStatus(category.getId(),1);
             List<Food> foodList = new ArrayList<>();
+            List<FoodVO> foodVOS = new ArrayList<>();
             for (int i = 0; i < foods.size(); i++) {
                 //foods.get(i).setImage_url(serverAddress  +"static/static/uploads/"+ foods.get(i).getImage_url());
                 Food food = foods.get(i);
                 food.setImage_url(serverAddress  +"static/static/uploads/"+ foods.get(i).getImage_url());
-                foodList.add(food);
+                /**/
+                //foodList.add(food);
+
+                FoodVO foodVO = new FoodVO();
+                foodVO.setCategory_id(food.getCategory_id());
+                foodVO.setImage_url(food.getImage_url());
+                foodVO.setName(food.getName());
+                foodVO.setPrice(food.getPrice());
+                foodVO.setStatus(food.getStatus());
+                foodVO.setCreate_time(food.getCreate_time());
+                foodVO.setCount(0);
+                foodVO.setId(food.getId());
+                foodVOS.add(foodVO);
             }
             foodListVo.setCategory_id(category.getId());
             foodListVo.setCategory_name(category.getName());
-            foodListVo.setFood(foodList);
+            foodListVo.setFood(foodVOS);
             foodListVos.add(foodListVo);
         }
+        System.out.println(foodListVos.toString());
         Setting setting = settingService.findSettingByName("promotion");
         ResponseFoodListParam responseFoodListParam = new ResponseFoodListParam();
         responseFoodListParam.setList(foodListVos);

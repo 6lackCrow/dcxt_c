@@ -18,7 +18,6 @@ public class ApiUserLoginInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         Cookie[] cookies = request.getCookies();
-        System.out.println("开始拦截");
         if (cookies!=null){
             for (int i = 0; i < cookies.length; i++) {
                 Cookie cookie = cookies[i];

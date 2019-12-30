@@ -167,9 +167,9 @@ public class FoodController {
 
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
-        out.print("<script language=\"javascript\">alert('删除成功');window.location.href='/admin/food/getfoodmanageindex'</script>");
+        out.print("<script language=\"javascript\">alert('删除成功');window.location.href='/admin/food/findfoods?categoryid=-1&search=&pageNow=1'</script>");
 
-        return "admin/food_manage/index";
+        return "admin/food_manage/find_foods_index";
     }
 
     @GetMapping("/geteditindex")
@@ -211,8 +211,8 @@ public class FoodController {
                 foodService.addFood(food);
                 response.setContentType("text/html;charset=UTF-8");
                 PrintWriter out = response.getWriter();
-                out.print("<script language=\"javascript\">alert('修改成功');window.location.href='/admin/food/getfoodmanageindex'</script>");
-                return "admin/food_manage/index";
+                out.print("<script language=\"javascript\">alert('修改成功');window.location.href='/admin/food/findfoods?categoryid=-1&search=&pageNow=1'</script>");
+                return "admin/food_manage/find_foods_index";
             }else {
                 food.setStatus(status);
                 food.setPrice(price);
@@ -221,13 +221,13 @@ public class FoodController {
                 foodService.addFood(food);
                 response.setContentType("text/html;charset=UTF-8");
                 PrintWriter out = response.getWriter();
-                out.print("<script language=\"javascript\">alert('修改成功');window.location.href='/admin/food/getfoodmanageindex'</script>");
-                return "admin/food_manage/index";
+                out.print("<script language=\"javascript\">alert('修改成功');window.location.href='/admin/food/findfoods?categoryid=-1&search=&pageNow=1'</script>");
+                return "admin/food_manage/find_foods_index";
             }
         } else {
             response.setContentType("text/html;charset=UTF-8");
             PrintWriter out = response.getWriter();
-            out.print("<script language=\"javascript\">alert('修改失败');window.location.href='/admin/food/getfoodmanageindex'</script>");
+            out.print("<script language=\"javascript\">alert('修改失败');window.location.href='/admin/food/findfoods?categoryid=-1&search=&pageNow=1'</script>");
             return "admin/food_manage/index";
         }
     }

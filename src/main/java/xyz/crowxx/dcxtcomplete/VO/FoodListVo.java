@@ -9,5 +9,5 @@ import java.util.List;
 public class FoodListVo {
     private Long category_id;
     private String category_name;
-    private List<Food> food;
+    private List<FoodVO> food;
 }
