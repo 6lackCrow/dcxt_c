@@ -27,8 +27,6 @@ public class UserOrder {
     private String comment;
     @Column(nullable = false)
     private String create_time;
-    @Column(nullable = false)
     private String pay_time;
-    @Column(nullable = false)
     private String taken_time;
 }

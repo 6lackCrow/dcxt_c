@@ -8,6 +8,7 @@ import xyz.crowxx.dcxtcomplete.util.DateUtil;
 import javax.annotation.Resource;
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UserService {
@@ -28,5 +29,12 @@ public class UserService {
 
     public List<User> findAll() {
         return userRepository.findAll();
+    }
+
+    public User updataUser(Long user_id, BigDecimal price) {
+        Optional<User> userOptional = userRepository.findById(user_id);
+        User user = userOptional.get();
+        user.setPrice(user.getPrice().add(price));
+        return userRepository.save(user);
     }
 }
