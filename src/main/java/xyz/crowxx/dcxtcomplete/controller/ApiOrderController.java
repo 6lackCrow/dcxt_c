@@ -104,6 +104,7 @@ public class ApiOrderController {
 
     @GetMapping("/orderlist")
     public Object getOrderList(HttpServletRequest request,int last_id,int row){
+        System.out.println("lsid" + last_id);
         Cookie[] cookies = request.getCookies();
         User user = new User();
         boolean flag = false;
@@ -132,7 +133,7 @@ public class ApiOrderController {
             }
             ResponseOrderMsgList romsl = new ResponseOrderMsgList();
             romsl.setList(list);
-            romsl.setLast_id(last_id+10);
+            romsl.setLast_id(last_id+row);
             return romsl;
 
         }
