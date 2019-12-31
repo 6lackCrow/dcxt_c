@@ -132,7 +132,7 @@ public class ApiOrderController {
             }
             ResponseOrderMsgList romsl = new ResponseOrderMsgList();
             romsl.setList(list);
-            romsl.setLast_id(10);
+            romsl.setLast_id(last_id+10);
             return romsl;
 
         }
@@ -236,13 +236,6 @@ class ResponseOrderMsgList{
     private List<OrderMsg> list;
     private int last_id;
 }
-
-
-
-
-
-
-
 @Data
 class Record{
     private Long id;
