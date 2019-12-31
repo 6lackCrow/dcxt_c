@@ -102,6 +102,43 @@ public class ApiOrderController {
         return "{\"pay\":true}";
     }
 
+    @GetMapping("/orderlist")
+    public Object getOrderList(HttpServletRequest request,int last_id,int row){
+        Cookie[] cookies = request.getCookies();
+        User user = new User();
+        boolean flag = false;
+        if (cookies!=null){
+            for (int i = 0; i < cookies.length; i++) {
+                Cookie cookie = cookies[i];
+                User tmp = userService.findUserByOpenID(cookie.getValue());
+                if (tmp!=null){
+                    user = tmp;
+                    flag = true;
+                    break;
+                }
+            }
+        }
+        if (flag){
+            List<UserOrder> orders = userOrderService.findOrderByUserIdAndIsPayAndLimit(user.getId(),last_id,row);
+            List<OrderMsg> list = new ArrayList<>();
+            for (UserOrder order : orders) {
+               OrderFood of = orderFoodService.findFoodByOrderIdAndFirstFood(order.getId());
+               Optional<Food> foodOptional = foodService.findFoodById(of.getFood_id());
+               Food food = foodOptional.get();
+               OrderMsg orderMsg = new OrderMsg();
+               BeanUtils.copyProperties(order,orderMsg);
+               orderMsg.setFirst_food_name(food.getName());
+               list.add(orderMsg);
+            }
+            ResponseOrderMsgList romsl = new ResponseOrderMsgList();
+            romsl.setList(list);
+            romsl.setLast_id(10);
+            return romsl;
+
+        }
+        return new NotFoundException();
+    }
+
     @GetMapping("/record")
     public Object getRecord(HttpServletRequest request){
         List<Record> list = new ArrayList<>();
@@ -179,6 +216,33 @@ class RequestPayBody{
     private Long id;
     private String comment;
 }
+@Data
+class OrderMsg{
+    private Long id;
+    private Long user_id;
+    private BigDecimal price;
+    private BigDecimal promotion;
+    private Integer number;
+    private Integer is_pay;
+    private Integer is_taken;
+    private String comment;
+    private String create_time;
+    private String pay_time;
+    private String taken_time;
+    private String first_food_name;
+}
+@Data
+class ResponseOrderMsgList{
+    private List<OrderMsg> list;
+    private int last_id;
+}
+
+
+
+
+
+
+
 @Data
 class Record{
     private Long id;

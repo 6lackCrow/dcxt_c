@@ -69,4 +69,8 @@ public class UserOrderService {
     public List<UserOrder> findOrderByUserIdAndIsPay(Long id) {
         return userOrderRepository.findOrderByUserIdAndIsPay(id);
     }
+
+    public List<UserOrder> findOrderByUserIdAndIsPayAndLimit(Long id, int last_id, int row) {
+        return userOrderRepository.findOrderByUserIdAndIsPayAndLimit(id,last_id,row);
+    }
 }

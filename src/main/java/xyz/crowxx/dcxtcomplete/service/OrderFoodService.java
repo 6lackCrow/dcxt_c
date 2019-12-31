@@ -15,4 +15,8 @@ public class OrderFoodService {
     public List<OrderFood> findFoodByOrderId(Long id) {
         return orderFoodRepository.findOrderFoodsByOrder_id(id);
     }
+
+    public OrderFood findFoodByOrderIdAndFirstFood(Long id) {
+        return orderFoodRepository.findFoodByOrderIdAndFirstFood(id);
+    }
 }
