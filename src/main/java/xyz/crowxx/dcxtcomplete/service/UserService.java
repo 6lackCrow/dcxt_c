@@ -37,4 +37,8 @@ public class UserService {
         user.setPrice(user.getPrice().add(price));
         return userRepository.save(user);
     }
+
+    public List<User> findAllUserAndPage(int pageNow, int pageSize) {
+        return userRepository.findAllUserAndPage(pageNow,pageSize);
+    }
 }

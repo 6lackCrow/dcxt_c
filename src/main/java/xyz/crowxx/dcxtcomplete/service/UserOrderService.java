@@ -73,4 +73,55 @@ public class UserOrderService {
     public List<UserOrder> findOrderByUserIdAndIsPayAndLimit(Long id, int last_id, int row) {
         return userOrderRepository.findOrderByUserIdAndIsPayAndLimit(id,last_id,row);
     }
+
+    public List<UserOrder> findOrderByType(int type) {
+        /*
+         * type=0 显示所有
+         * type=1 已付款未发货
+         * type=2 已付款
+         * type=3 已发货
+         * type=4 未付款
+         */
+        if (type==0){
+            return userOrderRepository.findAll();
+        }
+        else if(type==1){
+            return userOrderRepository.findOrderIsPayAndNotTaken();
+        }
+        else if(type==2){
+            return userOrderRepository.findOrderIsPay();
+        }
+        else if (type==3){
+            return userOrderRepository.findOrderIsTaken();
+        }
+        else{
+            return userOrderRepository.findOrderIsNotPay();
+        }
+    }
+
+    public List<UserOrder> findOrderByTypeAndPage(int type, int pageNow, int pageSize) {
+        if (type==0){
+            return userOrderRepository.findAllOrderByPage(pageNow,pageSize);
+        }
+        else if(type==1){
+            return userOrderRepository.findOrderIsPayAndNotTakenByPage(pageNow,pageSize);
+        }
+        else if(type==2){
+            return userOrderRepository.findOrderIsPayByPage(pageNow,pageSize);
+        }
+        else if (type==3){
+            return userOrderRepository.findOrderIsTakenByPage(pageNow,pageSize);
+        }
+        else{
+            return userOrderRepository.findOrderIsNotPayByPage(pageNow,pageSize);
+        }
+    }
+
+    public Optional<UserOrder> findOrderByOid(Long id) {
+        return userOrderRepository.findById(id);
+    }
+
+    public void deleteOrderById(Long id) {
+        userOrderRepository.deleteById(id);
+    }
 }

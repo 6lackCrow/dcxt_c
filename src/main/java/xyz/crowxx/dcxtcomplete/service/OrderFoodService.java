@@ -19,4 +19,9 @@ public class OrderFoodService {
     public OrderFood findFoodByOrderIdAndFirstFood(Long id) {
         return orderFoodRepository.findFoodByOrderIdAndFirstFood(id);
     }
+
+    public void deleteOrderFoodByOrderId(Long order_id) {
+        orderFoodRepository.deleteOrderFoodsByOid(order_id);
+    }
+
 }

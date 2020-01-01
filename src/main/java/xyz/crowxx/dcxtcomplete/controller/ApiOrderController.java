@@ -76,15 +76,25 @@ public class ApiOrderController {
         for (OrderFood food : list) {
             OrderFoods ofs = new OrderFoods();
             Optional<Food> foodById = foodService.findFoodById(food.getFood_id());
-            Food foodInfo = foodById.get();
-            ofs.setFood_id(foodInfo.getId());
-            ofs.setImage_url(serverAddress + "/static/static/uploads/" + foodInfo.getImage_url());
-            ofs.setName(foodInfo.getName());
-            ofs.setNumber(food.getNumber());
-            ofs.setOrder_id(food.getOrder_id());
-            ofs.setId(food.getId());
-            ofs.setPrice(food.getPrice());
-            foods.add(ofs);
+            if(!foodById.isEmpty()){
+                Food foodInfo = foodById.get();
+                ofs.setFood_id(foodInfo.getId());
+                ofs.setImage_url(serverAddress + "/static/static/uploads/" + foodInfo.getImage_url());
+                ofs.setName(foodInfo.getName());
+                ofs.setNumber(food.getNumber());
+                ofs.setOrder_id(food.getOrder_id());
+                ofs.setId(food.getId());
+                ofs.setPrice(food.getPrice());
+                foods.add(ofs);
+            }else {
+                Food foodInfo = new Food();
+                foodInfo.setName("该商品已被卖家删除");
+                foodInfo.setPrice(new BigDecimal(0));
+                ofs.setNumber(0);
+                ofs.setName(foodInfo.getName());
+                ofs.setPrice(food.getPrice());
+                foods.add(ofs);
+            }
         }
         orderMsg.setOrder_food(foods);
         //System.out.println(orderMsg.toString());
@@ -125,11 +135,21 @@ public class ApiOrderController {
             for (UserOrder order : orders) {
                OrderFood of = orderFoodService.findFoodByOrderIdAndFirstFood(order.getId());
                Optional<Food> foodOptional = foodService.findFoodById(of.getFood_id());
-               Food food = foodOptional.get();
-               OrderMsg orderMsg = new OrderMsg();
-               BeanUtils.copyProperties(order,orderMsg);
-               orderMsg.setFirst_food_name(food.getName());
-               list.add(orderMsg);
+               if(!foodOptional.isEmpty()){
+                   Food food = foodOptional.get();
+                   OrderMsg orderMsg = new OrderMsg();
+                   BeanUtils.copyProperties(order,orderMsg);
+                   orderMsg.setFirst_food_name(food.getName());
+                   list.add(orderMsg);
+               }else {
+                   Food food = new Food();
+                   food.setName("该商品已被卖家删除");
+                   food.setPrice(new BigDecimal(0));
+                   OrderMsg orderMsg = new OrderMsg();
+                   BeanUtils.copyProperties(order,orderMsg);
+                   orderMsg.setFirst_food_name(food.getName());
+                   list.add(orderMsg);
+               }
             }
             ResponseOrderMsgList romsl = new ResponseOrderMsgList();
             romsl.setList(list);

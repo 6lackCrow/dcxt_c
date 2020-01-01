@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" th:href="@{../../static/bootstrap/css/bootstrap-theme.min.css}"/>
+    <link rel="stylesheet" th:href="@{../../static/bootstrap/css/bootstrap.min.css}"/>
+    <link rel="stylesheet" th:href="@{../../static/css/css-main.css}"/>
+    <script type="text/javascript" th:src="@{../../static/jQuery/jquery-3.4.1.min.js}"></script>
+    <script type="text/javascript" th:src="@{../../static/bootstrap/js/bootstrap.min.js}"></script>
+    <script type="text/javascript" th:src="@{../../static/js/common.js}"></script>
+    <style type="text/css">
+        .disabled{
+            pointer-events:none;
+        }
+    </style>
+</head>
+<body>
+<div class="main-user">
+    <div class="main-title"><h2>客户管理</h2></div>
+    <div class="main-section">
+        <table class="table table-striped table-bordered table-hover" style="max-width:600px;">
+            <thead>
+            <tr>
+                <th width="100">客户编号</th>
+                <th width="130">消费金额</th>
+                <th width="130">注册时间</th>
+                <th width="130">操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="user:${users}">
+                <td th:text="${user.getId()}"></td>
+                <td th:text="${user.getPrice()}"></td>
+                <td th:text="${user.getCreate_time()}"><small></small></td>
+                <td>
+                    <a href="">查看订单</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="main-section">
+        <ul class="pagination">
+            <li id="back"><a th:href="@{'/admin/order/index?pageNow=' + ${pageBack}}">«</a></li>
+            <li th:each="page:${pageList}" th:id="'page'+${page}"><a th:href="@{'/admin/order/index?pageNow=' + ${page}}" th:text="${page}"></a></li>
+            <li id="next" ><a th:href="@{'/admin/order/index?pageNow=' + ${pageNext}}">»</a></li>
+        </ul>
+        <script th:inline="javascript">
+            var idNow = [[${pageNow}]];
+            var idmax = [[${pageMax}]]
+            if (idNow==1){
+                $("#back").addClass("disabled");
+            }
+            if (idmax == idNow){
+                $("#next").addClass("disabled");
+            }
+            $("#page"+idNow).addClass("active")
+        </script>
+    </div>
+</div>
+</body>
+</html>

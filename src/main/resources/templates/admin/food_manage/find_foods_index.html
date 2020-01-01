@@ -84,7 +84,6 @@
 </form>
 <div class="main-section">
     <ul class="pagination">
-<!--        Long categoryid, String search-->
         <li id="back"><a th:href="@{'/admin/food/findfoods?search='+${search}+'&categoryid='+${categoryid}+'&pageNow=' + ${pageBack}}">«</a></li>
         <li th:each="page:${pageList}" th:id="${page}"><a th:href="@{'/admin/food/findfoods?search='+${search}+'&categoryid='+${categoryid}+'&pageNow=' + ${page}}" th:text="${page}"></a></li>
         <li id="next" ><a th:href="@{'/admin/food/findfoods?search='+${search}+'&categoryid='+${categoryid}+'&pageNow=' + ${pageNext}}">»</a></li>
