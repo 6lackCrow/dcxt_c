@@ -17,6 +17,7 @@ public class UserController {
     UserService userService;
     @GetMapping("/index")
     public String getUserList(Model model,Integer pageNow){
+        System.out.println("users"+pageNow);
         /*分页：pageSize：一页显示多少数据
          * lineCount：一共有多少行数据
          * pageCount：需要分多少页

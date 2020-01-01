@@ -1,7 +1,6 @@
 package xyz.crowxx.dcxtcomplete.service;
 
 import org.springframework.stereotype.Service;
-import xyz.crowxx.dcxtcomplete.core.exception.NotFoundException;
 import xyz.crowxx.dcxtcomplete.model.Admin;
 import xyz.crowxx.dcxtcomplete.model.Setting;
 import xyz.crowxx.dcxtcomplete.repository.AdminRepository;
@@ -48,5 +47,13 @@ public class AdminService {
         if (list.size()==0){
             settingRepository.setDefaultName();
         }
+    }
+
+    public Optional<Admin> finAdminById(Long id) {
+        return adminRepository.findById(id);
+    }
+
+    public void updatePwd(Admin admin) {
+        adminRepository.save(admin);
     }
 }

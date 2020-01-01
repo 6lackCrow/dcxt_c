@@ -18,9 +18,13 @@ import xyz.crowxx.dcxtcomplete.service.AdminService;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/admin")
@@ -125,5 +129,41 @@ public class AuthController {
         model.addAttribute("img_swipers",imgSwiperVOS);
         model.addAttribute("promotion",promotionVO);
         return "admin/setting/index";
+    }
+
+    @GetMapping("/updatepwd/index")
+    public String getUpdatePwdIndex(){
+        return "admin/update_pwd/index";
+    }
+    @PostMapping("/updatepwd")
+    public String updatePwd(Long id, String pwd1, String pwd2, Model model, HttpServletResponse response) throws IOException {
+
+        if(pwd1.equals("")){
+            model.addAttribute("msg","密码不能为空!!!!!!!!!!!");
+            return "admin/update_pwd/index";
+        }
+        if(pwd2.equals("")){
+            model.addAttribute("msg","请输入确认密码!!!!!!!!");
+            return "admin/update_pwd/index";
+        }
+        if(pwd1.equals(pwd2)){
+            Optional<Admin> adminOptional = adminService.finAdminById(id);
+            if (!adminOptional.isEmpty()){
+                Admin admin = adminOptional.get();
+                admin.setPassword(pwd1);
+                adminService.updatePwd(admin);
+                response.setContentType("text/html;charset=UTF-8");
+                PrintWriter out = response.getWriter();
+                model.addAttribute("msg","修改成功");
+                out.print("<script language=\"javascript\">alert('修改密码之后需要重新登陆！');window.location.href='/admin/logout'</script>");
+                return "redirect:/admin/logout";
+            }else {
+                model.addAttribute("msg","修改失败");
+                return "admin/update_pwd/index";
+            }
+        }else {
+            model.addAttribute("msg","两次输入密码不一致");
+            return "admin/update_pwd/index";
+        }
     }
 }
